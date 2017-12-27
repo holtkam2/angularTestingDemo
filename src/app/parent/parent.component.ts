@@ -15,7 +15,7 @@ export class ParentComponent implements OnInit {
 
   ngOnInit() {
     this.parentService.getPosts().subscribe(res => {
-      this.posts = res;
+      this.posts = this.parentService.sortById(res);
       this.activePost =  res[0];
     })
   }

@@ -15,4 +15,10 @@ export class ParentService {
       .map(res => res.json());
   }
 
+  sortById(arr){
+    return arr.sort((post1, post2) => {
+      return post1.id - post2.id;
+    });
+  }
+
 }
