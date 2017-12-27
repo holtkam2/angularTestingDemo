@@ -1,3 +1,5 @@
-<p>
-  parent works!
-</p>
+<h2>Posts:</h2>
+<div>
+  <app-posts  [posts]="posts" (postClick)="setActivePost($event)"></app-posts>
+  <app-comments [activePost]="activePost"></app-comments>
+</div>

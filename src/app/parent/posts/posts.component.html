@@ -1,0 +1,4 @@
+<p *ngFor="let post of posts"
+  (click)="postClick.emit(post)">
+  {{post.title}}
+</p>

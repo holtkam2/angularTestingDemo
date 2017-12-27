@@ -9,14 +9,19 @@ import { ParentService } from "./services/parent.service";
 export class ParentComponent implements OnInit {
 
   posts = [];
-  comments = [];
+  activePost;
 
   constructor(private parentService: ParentService) { }
 
   ngOnInit() {
     this.parentService.getPosts().subscribe(res => {
-      console.log(res);
+      this.posts = res;
+      this.activePost =  res[0];
     })
+  }
+
+  setActivePost(post){
+    this.activePost = post;
   }
 
 }

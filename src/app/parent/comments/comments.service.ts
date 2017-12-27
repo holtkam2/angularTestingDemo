@@ -4,14 +4,12 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class ParentService {
+export class CommentsService {
 
-  root = 'https://jsonplaceholder.typicode.com';
+  constructor(private http: Http) { }
 
-  constructor(private http: Http) {}
-
-  getPosts(){
-    return this.http.get(`https://jsonplaceholder.typicode.com/posts`)
+  fetchComments(id){
+    return this.http.get(`https://jsonplaceholder.typicode.com/posts/${id}/comments`)
       .map(res => res.json());
   }
 
