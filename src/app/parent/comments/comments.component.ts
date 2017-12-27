@@ -9,16 +9,16 @@ import { CommentsService } from "./comments.service";
 export class CommentsComponent implements OnInit, OnChanges {
 
   @Input() activePost;
+  comments = [];
 
   constructor(private commentsService: CommentsService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnChanges(){
     if (this.activePost !== undefined){
       this.commentsService.fetchComments(this.activePost.id).subscribe(res => {
-        console.log(res);
+        this.comments = res;
       })
     }
   }

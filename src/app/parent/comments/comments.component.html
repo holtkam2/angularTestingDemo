@@ -1,4 +1,9 @@
 <h2>Comments:</h2>
-<p *ngIf="activePost !== undefined">
-  {{activePost.title}}
-</p>
+<h4 *ngIf="activePost !== undefined">
+  "{{activePost.title}}"
+</h4>
+<div *ngIf="activePost !== undefined">
+  <p *ngFor="let comment of comments">
+    -{{comment.name}}
+  </p>
+</div>
