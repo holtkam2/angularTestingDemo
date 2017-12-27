@@ -21,6 +21,7 @@ export class ParentComponent implements OnInit {
   }
 
   setActivePost(post){
+    console.log(post)
     this.activePost = post;
   }
 
