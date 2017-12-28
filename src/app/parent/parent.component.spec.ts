@@ -1,29 +1,33 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { ParentComponent } from './parent.component';
-import { ParentService } from "./services/parent.service";
-import { CommentsComponent } from "./comments/comments.component";
-import { PostsComponent } from "./posts/posts.component";
-import { CommentsService } from "./comments/comments.service";
-import { Http, Response, HttpModule } from '@angular/http';
+import { ParentService } from './services/parent.service';
+import { CommentsComponent } from './comments/comments.component';
+import { PostsComponent } from './posts/posts.component';
+import { CommentsService } from './comments/comments.service';
+import { HttpModule } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
 
-fdescribe('ParentComponent', () => {
+describe('ParentComponent', () => {
   let component: ParentComponent;
   let fixture: ComponentFixture<ParentComponent>;
+  let getPostsCalled = false;
+  let sortByIdCalled = false;
+  let parentService;
 
   beforeEach(async(() => {
 
     let mockParentService = {
-      getPosts: function (companyId) {
+      getPosts: () => {
+        getPostsCalled = true;
         return Observable.of([]);
       },
-      sortById(){
+      sortById: () => {
+        sortByIdCalled = true;
         return [];
       }
-    }
+    };
 
     TestBed.configureTestingModule({
       imports: [HttpModule],
@@ -41,10 +45,16 @@ fdescribe('ParentComponent', () => {
   }));
 
   beforeEach(() => {
+    getPostsCalled = false;
+    sortByIdCalled = false;
     fixture = TestBed.createComponent(ParentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
+  beforeEach(inject([ParentService], (p) => {
+    parentService = p;
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -65,5 +75,15 @@ fdescribe('ParentComponent', () => {
 
   it('should call parentService.getPosts when initialized', () => {
 
+    spyOn(parentService, 'getPosts').and.returnValue({subscribe: () => {}});
+    component.ngOnInit();
+    expect(parentService.getPosts).toHaveBeenCalled();
+
+    expect(getPostsCalled).toEqual(true);
   });
+
+  it('should call parentService.sortById after posts have been fetched', () => {
+    expect(sortByIdCalled).toEqual(true);
+  });
+
 });
