@@ -1,12 +1,28 @@
 import { TestBed, async } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
+import {ParentComponent} from "./parent/parent.component";
+import {CommentsComponent} from "./parent/comments/comments.component";
+import {PostsComponent} from "./parent/posts/posts.component";
+import {ParentService} from "./parent/services/parent.service";
+import {CommentsService} from "./parent/comments/comments.service";
+import {HttpModule} from "@angular/http";
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        HttpModule
+      ],
+      providers: [
+        ParentService,
+        CommentsService
+      ],
       declarations: [
-        AppComponent
+        AppComponent,
+        ParentComponent,
+        CommentsComponent,
+        PostsComponent
       ],
     }).compileComponents();
   }));
@@ -21,12 +37,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('app works!');
-  }));
-
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('app works!');
   }));
 });

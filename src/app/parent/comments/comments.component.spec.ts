@@ -3,12 +3,20 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentsComponent } from './comments.component';
 import { CommentsService } from "./comments.service";
 import { HttpModule } from "@angular/http";
+import { Observable } from "rxjs/Observable";
 
-fdescribe('CommentsComponent', () => {
+describe('CommentsComponent', () => {
   let component: CommentsComponent;
   let fixture: ComponentFixture<CommentsComponent>;
+  const dummyComments = [
+    {postId: 1, id: 1, name: 'this is a comment', email: 'email1', body: '123'},
+    {postId: 2, id: 2, name: 'another comment', email: 'email2', body: '456'}
+  ];
+
   let dummyCommentsService = {
-    fetchComments: () => {}
+    fetchComments: () => {
+      return Observable.of(dummyComments);
+    }
   };
 
   beforeEach(async(() => {
@@ -31,6 +39,8 @@ fdescribe('CommentsComponent', () => {
   });
 
   it('updates comments prop when a new activePost is selected', () => {
-    expect(1).toEqual(1);
+    component.activePost = {body: '', title:'', id: 1, userId: 1};
+    component.ngOnChanges();
+    expect(component.comments).toEqual(dummyComments);
   });
 });
